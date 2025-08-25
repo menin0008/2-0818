@@ -41,6 +41,10 @@
             align-items: center;
             border-radius: 10px;
         }
+        .item1:hover {
+            transform: rotote(360deg);
+            trasition: 1000ms;
+        }
 
     </style>
 </head>
@@ -58,6 +62,53 @@
         <div class="desc item4">requestAnimationFrame 메소드와 addEventListner 메소드 사용</div>
     </div>
 
+    <script>
+        const item1 = document.querySelector('.item1');
+        const item2 = document.querySelector('.item2');
+        const item3 = document.querySelector('.item3');
+        const item4 = document.querySelector('.item4');
+        // 첫번째 사각형 : 스타일 속성 변경
+        window.addEventListener('load', function() {
+            item1.style.transform = 'rotate(360deg)';
+            item1.style.transition= '10s';
+        });
 
+        // 두번째 사각형 : requestAnimationFrame 메소드 사용
+        let rotate = 0
+        function item2Rotate() {
+            item2.style.transform = `rotate(${rotate}deg)`;/* deg 앞에는 spaceing이 있으면 안먹음. 띄어쓰기 X */
+            rotate+=1; /* rotate 값이 1씩 증가 : */
+            requestAnimationFrame(item2Rotate); /* for 문 쓰는거 처럼 계속반복됨 */
+        }
+        item2Rotate();
+
+
+        // 세번째 사각형 : click 이벤트 발생시 90도 회전
+        let rotate3 = 0;
+        item3.addEventListener('click', function() {
+            rotate3 += 90;
+            item3.style.transform = `rotate(${rotate3}deg)`;
+            item3.style.transition = '1s';
+        });
+
+        // 네번째 사각형 : requestAnimationFrame 를 츼소하기 removeAnimationFrame
+
+        let rotate4 = 0;
+        let iten4Rep;
+
+        function item4Rotate() {
+            rotate4 += 5;
+            item4.style.transform = `rotate(${rotate4}deg)`;
+            iten4Rep = requestAnimationFrame(item4Rotate);
+        }
+
+        item4.addEventListener('mouseover', function() {
+            item4Rotate();
+        });
+
+        item4.addEventListener('mouseleave ', function() {
+            cancelAnimationFrame(iten4Rep);
+        });
+    </script>
 </body>
 </html>
